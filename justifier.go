@@ -37,6 +37,8 @@ func New(ctx context.Context, next http.Handler, config *Config, name string) (h
 }
 
 func (a *Demo) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
+	// TODO задавать x-auth-token можно из docker-compose:labels.
+	//  в таком случае каждый сервис сам сможет задавать для себя нужные токены
 	key := a.headers["key"]
 	value := a.headers["value"]
 	requestHeader := req.Header.Get(key)
@@ -44,7 +46,6 @@ func (a *Demo) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 		errorMessage := "Required authentication header is not found or invalid token is given"
 		fmt.Println(errorMessage, req)
 		http.Error(rw, errorMessage, http.StatusUnauthorized)
-		a.next.ServeHTTP(rw, req)
 		return
 	}
 
