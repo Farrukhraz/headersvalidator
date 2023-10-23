@@ -1,0 +1,11 @@
+displayName: Request headers validator
+type: middleware
+
+import: github.com/Farrukhraz/headersvalidator
+
+summary: 'Validate request headers for necessary key:value pairs'
+
+testData:
+  Headers:
+    key: "header name"
+    value: "header value"
